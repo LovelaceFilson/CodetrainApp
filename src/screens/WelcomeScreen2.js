@@ -19,22 +19,21 @@ export default function WelcomeScreen2({ navigation }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <View>
+        <View style={styles.started}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("RegisterScren");
+              navigation.navigate("Register");
             }}
           >
             <Text style={styles.buttonText1}>REGISTER</Text>
           </TouchableOpacity>
         </View>
 
-        <View>
+        <View style={styles.started}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("LoginScreen");
+              navigation.navigate("Login");
             }}
-            
           >
             <Text style={styles.buttonText2}>SIGN IN</Text>
           </TouchableOpacity>
@@ -47,7 +46,7 @@ export default function WelcomeScreen2({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 0.999,
-    backgroundColor: "pink",
+    backgroundColor: "white",
   },
   image: {
     height: 370,
@@ -73,10 +72,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 60,
     marginVertical: 90,
   },
-  buttonText1: {
-    textDecorationLine: "underline",
-  },
-  buttonText2: {
-    textDecorationLine: "underline",
+
+  started: {
+    borderBottomColor: "red",
+    borderBottomWidth: 1,
   },
 });

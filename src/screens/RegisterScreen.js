@@ -121,7 +121,7 @@ export default function RegisterScreen({ navigation }) {
         <View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("RegisterScreen");
+              navigation.navigate("Home");
             }}
             style={styles.buttonContainer}
           >

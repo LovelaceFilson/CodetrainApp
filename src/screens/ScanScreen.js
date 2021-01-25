@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from "@expo/vector-icons";
 
-const ScanScreen = () => {
+const ScanScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -15,7 +15,7 @@ const ScanScreen = () => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    navigation.navigate("Member")
   };
 
   if (hasPermission === null) {
@@ -33,9 +33,16 @@ const ScanScreen = () => {
       />
       <View style={styles.iconContainer}>
         <Ionicons name="ios-flash" size={26} color="white" />
-        <TouchableOpacity>
-          <Ionicons name="ios-close" size={26} color="white" />
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+            style={styles.buttonContainer}
+          >
+            <Ionicons name="ios-close" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.footer}>
@@ -43,7 +50,7 @@ const ScanScreen = () => {
           <Text style={styles.scanText}>Want to add a new connection?</Text>
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate("");
+              navigation.navigate("");
             }}
             style={styles.buttonContainer}
           >
@@ -88,11 +95,10 @@ const styles = StyleSheet.create({
     color: "#f4511e",
     fontSize: 15,
   },
-  iconContainer:{
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginHorizontal: 20,
-      marginTop: 50,
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginTop: 50,
   },
 });
-

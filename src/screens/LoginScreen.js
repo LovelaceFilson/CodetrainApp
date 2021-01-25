@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
         <View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("RegisterScreen");
+              navigation.navigate("Home");
             }}
             style={styles.buttonContainer}
           >

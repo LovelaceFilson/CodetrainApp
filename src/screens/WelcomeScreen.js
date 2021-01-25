@@ -13,12 +13,11 @@ export default function WelcomeScreen({ navigation }) {
       <View>
         <Text style={styles.topic}>CODETRAIN CONTACTS</Text>
       </View>
-      <View>
+      <View style={styles.started}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("WelcomeScreen2");
+            navigation.navigate("Welcome2");
           }}
-          
         >
           <Text style={styles.buttonText}>GET STARTED</Text>
         </TouchableOpacity>
@@ -46,7 +45,11 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontWeight: "bold",
-    textDecorationLine: "underline",
+
     fontSize: 20,
+  },
+  started: {
+    borderBottomColor: "red",
+    borderBottomWidth: 1,
   },
 });

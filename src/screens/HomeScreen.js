@@ -2,7 +2,7 @@ import React from "react";
 import { QRCode } from "react-native-custom-qr-codes-expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topic}>
@@ -28,7 +28,7 @@ const HomeScreen = () => {
           <Text style={styles.scanText}>Want to add a new connection?</Text>
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate("");
+              navigation.navigate("Scan");
             }}
             style={styles.buttonContainer}
           >
