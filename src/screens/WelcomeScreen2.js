@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
   },
   image: {
-    height: 370,``
+    height: 370,
     width: 375,
   },
   topic: {

@@ -6,6 +6,8 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import WelcomeScreen2 from "./src/screens/WelcomeScreen2";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import { AntDesign } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -14,16 +16,22 @@ export default function App() {
       <Stack.Navigator initialRouteName="WelcomeScreen">
         <Stack.Screen
           options={{
-            title: "Register",
-            
+            title: "Codetrain",
+
             headerTitleAlign: "center",
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: "#f4511e",
             },
-              headerTintColor: '#fff',
+            headerTintColor: "#fff",
+
+            headerRight: () => (
+              <View style={{ marginRight: 10 }}>
+                <AntDesign name="user" size={25} color="white" />
+              </View>
+            ),
           }}
           name="Welcome"
-          component={RegisterScreen}
+          component={HomeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
