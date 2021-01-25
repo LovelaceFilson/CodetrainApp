@@ -10,7 +10,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import { AntDesign } from "@expo/vector-icons";
 import ScanScreen from "./src/screens/ScanScreen";
 import MemberScreen from "./src/screens/MemberScreen";
-
+import MyProfileScreen from "./src/screens/MyProfileScreen";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -34,7 +34,7 @@ export default function App() {
             ),
           }}
           name="Welcome"
-          component={MemberScreen}
+          component={MyProfileScreen}
         />
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Register" component={RegisterScreen}/>
