@@ -15,7 +15,7 @@ const ScanScreen = ({ navigation }) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    navigation.navigate("Member")
+    navigation.navigate("Member");
   };
 
   if (hasPermission === null) {
@@ -50,7 +50,7 @@ const ScanScreen = ({ navigation }) => {
           <Text style={styles.scanText}>Want to add a new connection?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("");
+              navigation.navigate("Home");
             }}
             style={styles.buttonContainer}
           >
