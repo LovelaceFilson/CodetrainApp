@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import {
   StyleSheet,
   View,
@@ -7,14 +7,35 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { connect } from "react-redux";
+import {
+  createEmailAccount,
+  registerError,
+} from "../redux/actions/authActions";
 
-export default function RegisterScreen({ navigation }) {
-  const [image, setImage] = useState(null);
-  useEffect(() => {
+class RegisterScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      image: null,
+    };
+  }
+  handleUpdateState = (name, value) => {
+    this.setState({
+      [name]: value,
+    });
+  };
+  handleOnSubmit = () => {
+    this.props.createEmailAccount(this.state.email, this.state.password);
+  };
+
+  componentDidMount() {
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -25,112 +46,136 @@ export default function RegisterScreen({ navigation }) {
         }
       }
     })();
-  }, []);
+  }
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  render() {
+    const { navigation, auth } = this.props;
 
-    console.log(result);
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+      console.log(result);
 
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <ImageBackground style={styles.profile} source={{uri:image}}>
-          <TouchableOpacity
-            onPress={pickImage}
-            style={styles.buttonContainerProfile}
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+      }
+    };
+
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <ImageBackground
+            style={styles.profile}
+            source={{ uri: this.state.image }}
           >
-            <View style={styles.icon}>
-              <AntDesign name="user" size={50} color="#f4511e" />
+            <TouchableOpacity
+              onPress={pickImage}
+              style={styles.buttonContainerProfile}
+            >
+              <View style={styles.icon}>
+                <AntDesign name="user" size={50} color="#f4511e" />
+              </View>
+
+              <Text style={styles.buttonTextProfile}>ADD PROFILE PHOTO</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+
+          <View style={styles.formContainer}>
+            <View style={styles.label}>
+              <Text>Full Name</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="Abraham Lincoln"
+                />
+              </View>
             </View>
 
-            <Text style={styles.buttonTextProfile}>ADD PROFILE PHOTO</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+            <View style={styles.label}>
+              <Text>Email</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  value={this.state.email}
+                  onChangeText={(text) => {
+                    this.handleUpdateState("email", text);
+                  }}
+                  placeholder="lacey.filson@gmail.com"
+                />
+              </View>
+            </View>
+            <View style={styles.label}>
+              <Text>Phone Number</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="+233(244) 889 375"
+                />
+              </View>
+            </View>
 
-        <View style={styles.formContainer}>
-          <View style={styles.label}>
-            <Text>Full Name</Text>
-            <View style={styles.input}>
+            <View style={styles.label}>
+              <Text>Password</Text>
               <TextInput
                 placeholderTextColor="#aaaaaa"
-                placeholder="Abraham Lincoln"
+                secureTextEntry={true}
+                value={this.state.password}
+                onChangeText={(text) => {
+                  this.handleUpdateState("password", text);
+                }}
+                placeholder="*****"
               />
+            </View>
+
+            <View style={styles.label}>
+              <Text>Role</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="Software Developer"
+                />
+              </View>
+            </View>
+
+            <View style={styles.label}>
+              <Text>Twitter</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="@abrahamlincoln"
+                />
+              </View>
+            </View>
+
+            <View style={styles.label}>
+              <Text>LinkedIn</Text>
+              <View style={styles.input}>
+                <TextInput
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="/abrahamlincoln"
+                />
+              </View>
             </View>
           </View>
-
-          <View style={styles.label}>
-            <Text>Email</Text>
-            <View style={styles.input}>
-              <TextInput
-                placeholderTextColor="#aaaaaa"
-                placeholder="lacey.filson@gmail.com"
-              />
-            </View>
-          </View>
-          <View style={styles.label}>
-            <Text>Phone Number</Text>
-            <View style={styles.input}>
-              <TextInput
-                placeholderTextColor="#aaaaaa"
-                placeholder="+233(244) 889 375"
-              />
-            </View>
-          </View>
-
-          <View style={styles.label}>
-            <Text>Role</Text>
-            <View style={styles.input}>
-              <TextInput
-                placeholderTextColor="#aaaaaa"
-                placeholder="Software Developer"
-              />
-            </View>
-          </View>
-
-          <View style={styles.label}>
-            <Text>Twitter</Text>
-            <View style={styles.input}>
-              <TextInput
-                placeholderTextColor="#aaaaaa"
-                placeholder="@abrahamlincoln"
-              />
-            </View>
-          </View>
-
-          <View style={styles.label}>
-            <Text>LinkedIn</Text>
-            <View style={styles.input}>
-              <TextInput
-                placeholderTextColor="#aaaaaa"
-                placeholder="/abrahamlincoln"
-              />
-            </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                this.handleOnSubmit();
+              }}
+              style={styles.buttonContainer}
+            >
+              <Text style={styles.buttonText}>REGISTER</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-            style={styles.buttonContainer}
-          >
-            <Text style={styles.buttonText}>REGISTER</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -182,5 +227,9 @@ const styles = StyleSheet.create({
   profile: {
     // backgroundColor: "green",
     paddingVertical: 25,
-  }
+  },
 });
+const mapStateToProp = (state) => {
+  return { auth: state };
+};
+export default connect(mapStateToProp, { createEmailAccount })(RegisterScreen);

@@ -1,7 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Zocial, Feather, SimpleLineIcons } from "@expo/vector-icons";
-const MyProfileScreen = () => {
+import { logout } from "../redux/actions/authActions";
+import { connect } from "react-redux";
+
+const MyProfileScreen = ({ logout }) => {
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
@@ -40,11 +43,19 @@ const MyProfileScreen = () => {
         </View>
         <Text style={styles.detail}>Takoradi Atlantic Hotel</Text>
       </View>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            logout();
+          }}
+          style={styles.buttonContainer}
+        >
+          <Text style={styles.buttonText}>LOG OUT</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-
-export default MyProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -94,4 +105,20 @@ const styles = StyleSheet.create({
   detail: {
     marginLeft: 15,
   },
+  buttonContainer: {
+    alignSelf: "center",
+    height: 50,
+    width: 320,
+    borderRadius: 6,
+    backgroundColor: "#f4511e",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 80,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 15,
+  },
 });
+
+export default connect(() => ({}), { logout })(MyProfileScreen);
